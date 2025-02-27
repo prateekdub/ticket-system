@@ -35,7 +35,7 @@ export default function TaskBoard() {
     if (active.data?.current?.parent) {
       setTickets((prevTickets) => {
         return prevTickets.map((ticket) => {
-          if (ticket.id * 1 == parseInt(ticketId)) {
+          if (ticket.id * 1 == parseInt(ticketId) && !ticket.tasks.length) {
             // Find and update the dragged task
             return { ...ticket, "status": newStatus };
           }
