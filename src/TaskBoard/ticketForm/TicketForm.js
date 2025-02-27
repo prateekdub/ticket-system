@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./TicketForm.css";
+import { TICKET_TITLE_PLACEHOLDER, TICKET_DROPDOWN, TICKET_ADD_BUTTON } from "../config";
 
 
 export function TicketForm({ addTicket }) {
@@ -7,7 +8,6 @@ export function TicketForm({ addTicket }) {
   const [title, setTitle] = useState("");
 
   const handleSubmit = (e) => {
-    // e.preventDefault();
     if (!title.trim()) return;
     addTicket({ id: Date.now(), type, title, tasks: [], status: "" });
     setTitle("");
@@ -19,8 +19,11 @@ export function TicketForm({ addTicket }) {
 
       {/* drop down starts */}
       <select className="ticket-dropdown" value={type} onChange={(e) => setType(e.target.value)}>
-        <option value="ticket">Ticket</option>
-        <option value="bug">Bug</option>
+      {TICKET_DROPDOWN.map(x => {
+        return (
+          <option value={x.toLowerCase()}>{x}</option>
+        )
+      })}
       </select>
 
       {/* dropdown ends */}
@@ -29,12 +32,12 @@ export function TicketForm({ addTicket }) {
       <input
         className="ticket-input"
         type="text"
-        placeholder="Enter title"
+        placeholder={TICKET_TITLE_PLACEHOLDER}
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
       {/* input ends */}
-      <button className="ticket-button" type="submit">Add Ticket</button>
+      <button className="ticket-button" type="submit">{TICKET_ADD_BUTTON}</button>
     </form>
     </div>
   );
