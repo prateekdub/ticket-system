@@ -7,24 +7,17 @@ export function Column({ status, tasks, heading = '', ticketTitle, ticketId, add
 
   if (heading) {
     return <div className="column">{heading}</div>
-  }else if ((!tasks || tasks.length == 0) && ticketStatus == status) {
+  }else if (((!tasks || tasks.length == 0) && ticketStatus == status) ||
+  status == STATUS.MAIN_STORY) {
     const obj = {
       id: ticketId,
       title: ticketTitle
     }
     return (
       <div className="column">
-        <TaskCard status={ticketStatus} key={obj.id} task={obj} showAdd={true} addSubtask={addSubtask} updateTaskTitle={updateTaskTitle} data={{ parent: true }} />
-      </div>
-    )
-  }else if (status == STATUS.MAIN_STORY) {
-    const obj = {
-      id: ticketId,
-      title: ticketTitle
-    }
-    return (
-      <div className="column">
-        <TaskCard status={ticketStatus} key={obj.id} task={obj} showAdd={true} addSubtask={addSubtask} updateTaskTitle={updateTaskTitle} data={{ parent: true }} />
+        <TaskCard status={ticketStatus} key={obj.id} task={obj} showAdd={true}
+        addSubtask={addSubtask} updateTaskTitle={updateTaskTitle} 
+        data={{ parent: true }} />
       </div>
     )
   }
