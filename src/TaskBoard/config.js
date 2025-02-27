@@ -19,3 +19,6 @@ export const TICKET_DROPDOWN = ["Ticket", "Bug"]
 export const TICKET_TITLE_PLACEHOLDER = "Enter title"
 
 export const TICKET_ADD_BUTTON = "Add Ticket"
+
+export const UPDATE_TASK_TITLE_BUTTON = "Update";
+export const TASK_TITLE_INPUT_PLACEHOLDER = "Enter subtask title"

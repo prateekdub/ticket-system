@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Draggable } from "../../lib/DragDropProvider.js";
 import "./TaskCard.css";
-import { STATUS_COLOR } from "../config.js";
+import { STATUS_COLOR, TASK_TITLE_INPUT_PLACEHOLDER, UPDATE_TASK_TITLE_BUTTON } from "../config.js";
 
 export function TaskCard({ task, addSubtask, showAdd=false, status, updateTaskTitle, data }) {
   const [showInput, setShowInput] = useState(false);
@@ -44,10 +44,10 @@ export function TaskCard({ task, addSubtask, showAdd=false, status, updateTaskTi
               type="text"
               value={subtaskTitle}
               onChange={(e) => setSubtaskTitle(e.target.value)}
-              placeholder="Enter subtask title"
+              placeholder={TASK_TITLE_INPUT_PLACEHOLDER}
               onClick={(e) => e.stopPropagation()}
             />
-            <button onClick={handleUpdateSubtask}>Update</button>
+            <button onClick={handleUpdateSubtask}>{UPDATE_TASK_TITLE_BUTTON}</button>
           </div>
         )}
       </div>
