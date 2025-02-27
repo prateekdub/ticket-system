@@ -9,7 +9,7 @@ export function TicketForm({ addTicket }) {
   const handleSubmit = (e) => {
     // e.preventDefault();
     if (!title.trim()) return;
-    addTicket({ id: Date.now(), type, title, tasks: [], status: "todo" });
+    addTicket({ id: Date.now(), type, title, tasks: [], status: "" });
     setTitle("");
   };
 
