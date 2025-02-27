@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./TicketForm.css";
 import { TICKET_TITLE_PLACEHOLDER, TICKET_DROPDOWN, TICKET_ADD_BUTTON } from "../config";
+import { validateAndSanitizeInput } from "../helper";
 
 
 export function TicketForm({ addTicket }) {
@@ -12,6 +13,12 @@ export function TicketForm({ addTicket }) {
     addTicket({ id: Date.now(), type, title, tasks: [], status: "" });
     setTitle("");
   };
+
+  const titleChange = (e) => {
+    const inputSanitized =  validateAndSanitizeInput(e)
+    if (inputSanitized?.isValid)
+    setTitle(inputSanitized?.sanitized)
+  }
 
   return (
     <div className="ticket-form-container">
@@ -34,7 +41,7 @@ export function TicketForm({ addTicket }) {
         type="text"
         placeholder={TICKET_TITLE_PLACEHOLDER}
         value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={(e) => titleChange(e.target.value)}
       />
       {/* input ends */}
       <button className="ticket-button" type="submit">{TICKET_ADD_BUTTON}</button>
