@@ -42,4 +42,14 @@ export const updateTicketData = (tickets, actionType, payload) => {
       }
     });
   };
+
+
+  export const checkIfAllTasksDone = (newStatus, tasks) => {
+    if (newStatus == 'done') {
+      const flag = tasks?.every(x => x.status == 'done');
+      const count = tasks.reduce((counter, {status}) => status == 'done' ? counter + 1 : counter, 0);
+      return count + 1 === tasks.length ? true : false
+    }
+    return false;
+  }
   

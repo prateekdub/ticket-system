@@ -5,7 +5,7 @@ import { API_URL } from "../config";
 import { TicketForm } from "../ticketForm/TicketForm";
 import { Column } from "../column/Column";
 import { DragDropProvider, Droppable } from "../../lib/DragDropProvider";
-import { updateTicketData } from "./ticketUtils";
+import { checkIfAllTasksDone, updateTicketData } from "./ticketUtils";
 
 export default function TaskBoard() {
   const [tickets, setTickets] = useState([]);
@@ -67,10 +67,16 @@ export default function TaskBoard() {
       return prevTickets.map((ticket) => {
         if (ticket.id * 1 == parseInt(ticketId)) {
           // Find and update the dragged task
-          const updatedTasks = ticket.tasks.map((task) =>
-            task.id === active.id ? { ...task, status: newStatus } : task
+          const updatedTasks = ticket.tasks.map((task) => {
+           return  task.id === active.id ? { ...task, status: newStatus } : task
+          }
           );
-          return { ...ticket, tasks: updatedTasks };
+          const allDone = checkIfAllTasksDone(newStatus, ticket.tasks);
+          let updatedTicket = {...ticket};
+          if (allDone) {
+            updatedTicket = {...ticket, status: 'done'};
+          }
+          return { ...updatedTicket, tasks: updatedTasks };
         }
         return ticket;
       });
