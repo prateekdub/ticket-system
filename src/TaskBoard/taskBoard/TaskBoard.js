@@ -1,27 +1,26 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import "./TaskBoard.css";
-import { API_URL } from "../config";
 import { TicketForm } from "../ticketForm/TicketForm";
 import { Column } from "../column/Column";
 import { DragDropProvider, Droppable } from "../../lib/DragDropProvider";
 import { checkIfAllTasksDone, updateTicketData } from "./ticketUtils";
+import { add, getData, update } from "../apis";
 
 export default function TaskBoard() {
   const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
-    axios.get(API_URL).then((res) => setTickets(res.data));
+    getData().then((res) => setTickets(res.data));
   }, []);
 
   const addTicket = (ticket) => {
-    axios.post(API_URL, ticket).then((res) => {
+   add(ticket).then((res) => {
       setTickets([...tickets, res.data]);
     });
   };
 
   const updateTicket = (id, updatedFields) => {
-    axios.patch(`${API_URL}/${id}/tasks`, updatedFields).then((res) => {
+   update(id, updatedFields).then((res) => {
       setTickets(tickets.map((t) => (t.id === id ? res.data : t)));
     });
   };
@@ -32,24 +31,6 @@ export default function TaskBoard() {
 
     const [ticketId, newStatus] = over.id.split("-"); // Extract ticket ID and new status
 
-    // updating DB - json server does not support this.
-    // updateTicket(ticketId, {
-    //   "tasks": [
-    //     {
-    //       "id": active.id, 
-    //       "status": newStatus
-    //     }
-    //   ]
-    // })
-
-
-    // setTickets(
-    //   updateTicketData(tickets, "UPDATE_TASK_STATUS", {
-    //     ticketId: active.data.current.parent,
-    //     taskId: active.id,
-    //     newStatus: over.id,
-    //   })
-    // );
 
     if (active.data?.current?.parent) {
       setTickets((prevTickets) => {
